@@ -1,21 +1,15 @@
 package game;
 
-import java.util.Random;
+import java.util.ArrayList;
 
 public class Game {
 
-  String word;
-  int attemptsRemaining = 10;
+  private String word;
+  private int attemptsRemaining = 10;
+  private ArrayList<Character> guessedLetters = new ArrayList<Character>(); 
 
-  public static final String[] DICTIONARY= {
-    "MAKERS",
-    "CANDIES",
-    "DEVELOPER",
-    "LONDON",
-  };
-
-  Game() {
-    word = getRandomWordFromDictionary();
+  Game(WordChooser chooser) {
+    word = chooser.getRandomWordFromDictionary();
   }
 
   public String getWordToGuess() {
@@ -36,14 +30,19 @@ public class Game {
     return attemptsRemaining;
   }
 
-  public static String getRandomWordFromDictionary() {
-    Random rand = new Random();
-    Integer randomWord = rand.nextInt(DICTIONARY.length);
-    return randomWord.toString();
+  public Boolean guessLetter(Character letter) {
+    if (word.indexOf(letter) != -1) {
+      guessedLetters.add(letter);
+      return true;
+    } else {
+      attemptsRemaining--;
+      return false;
+    }
   }
 
   public static void main(String[] args) {
-    Game game = new Game();
+    WordChooser choice = new WordChooser();
+    Game game = new Game(choice);
     String guess = game.getWordToGuess();
     System.out.println(guess);
   }
