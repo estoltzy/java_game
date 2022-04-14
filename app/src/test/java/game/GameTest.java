@@ -33,4 +33,20 @@ public class GameTest {
     Game game = new Game(mockedChooser);
     assertEquals(game.guessLetter('T'), false);
   }
+
+  @Test public void testGuessLetterRightandDisplayGuessedLetter() {
+    WordChooser mockedChooser = mock(WordChooser.class);
+    when(mockedChooser.getRandomWordFromDictionary()).thenReturn("MAKERS");
+    Game game = new Game(mockedChooser);
+    assertEquals(game.guessLetter('K'), true);
+    assertEquals(game.getWordToGuess(), "M_K___");
+  }
+
+  @Test public void testGuessLetterWrong() {
+  WordChooser mockedChooser = mock(WordChooser.class);
+  when(mockedChooser.getRandomWordFromDictionary()).thenReturn("MAKERS");
+  Game game = new Game(mockedChooser);
+    assertEquals(game.guessLetter('T'), false);
+    assertEquals(game.getWordToGuess(), "M_____");
+  }
 }

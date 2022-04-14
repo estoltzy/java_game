@@ -2,6 +2,8 @@ package game;
 
 import java.util.ArrayList;
 
+import java.util.Scanner;
+
 public class Game {
 
   private String word;
@@ -16,7 +18,7 @@ public class Game {
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < word.length(); i++){
       char c = word.charAt(i);
-      if (i != 0) {
+      if (i != 0 && !guessedLetters.contains(c)) {
         sb.append("_");
       } else {
         sb.append(c);
@@ -38,6 +40,24 @@ public class Game {
       attemptsRemaining--;
       return false;
     }
+  }
+
+  public void play() {
+    Scanner input = new Scanner(System.in);
+    String wordToGuess = getWordToGuess();
+    System.out.println(String.format("Welcome! Today the word to guess is: \n %s", wordToGuess));
+    while (attemptsRemaining > 0 && wordToGuess.indexOf('_') != -1) {
+      System.out.println(String.format("Enter one letter to guess (%d attempts remaining)", getRemainingAttempts()));
+      char firstChar = input.next().charAt(0);
+      if (guessLetter(firstChar) == true) {
+        System.out.println("Right!");
+        wordToGuess = getWordToGuess();
+      } else {
+        System.out.println("Wrong...");
+      }
+      System.out.println(wordToGuess);
+    }
+    input.close();
   }
 
   public static void main(String[] args) {

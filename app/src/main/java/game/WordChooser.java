@@ -13,7 +13,6 @@ public class WordChooser {
 
   public String getRandomWordFromDictionary() {
     Random rand = new Random();
-    Integer randomWord = rand.nextInt(DICTIONARY.length);
-    return randomWord.toString();
+    return DICTIONARY[rand.nextInt(DICTIONARY.length)];
   }
 }
